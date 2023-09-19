@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:save_app/components/header_widget.dart';
+import 'package:save_app/pages/otp_screen.dart';
 
 class ResetPassPhone extends StatelessWidget{
 
@@ -47,7 +48,14 @@ class ResetPassPhone extends StatelessWidget{
                                       width: 2.0, color: Colors.lightGreen))),
                         ),
                         const SizedBox(height: 20.0),
-                        SizedBox(width: double.infinity,child: ElevatedButton(onPressed: (){},child: const Text("Next"),
+                        SizedBox(width: double.infinity,child: ElevatedButton
+                          (onPressed: (){
+                          Navigator.push(context,
+                            MaterialPageRoute( builder: (context)=> OTPScreen(),
+                            ),
+                          );
+                        }
+                          ,child: const Text("Next"),
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.all(20.0),
                             fixedSize: Size(150, 70),
