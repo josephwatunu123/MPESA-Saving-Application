@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:save_app/components/passwordfields.dart';
+import 'package:save_app/pages/signup_page.dart';
 
 class LoginPage extends StatelessWidget {
   final Function()? onTap;
@@ -86,7 +87,12 @@ class LoginPage extends StatelessWidget {
             ),
             SizedBox(height: 50),
 
-            TextButton(onPressed: () {},
+            TextButton(onPressed: () {
+              Navigator.push(context,
+                MaterialPageRoute( builder: (context)=> SignupScreen(),
+              ),
+              );
+            },
                 child: Text.rich(
                 TextSpan(
                   text: 'Dont have an account?',
