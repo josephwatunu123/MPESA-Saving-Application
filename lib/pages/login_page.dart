@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:save_app/components/passwordfields.dart';
+import 'package:save_app/pages/reset_through_mail.dart';
+import 'package:save_app/pages/reset_through_phone.dart';
 import 'package:save_app/pages/signup_page.dart';
+import 'package:save_app/components/constants.dart';
 
 class LoginPage extends StatelessWidget {
   final Function()? onTap;
@@ -59,7 +62,77 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(context: context,
+                        shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(22.0)),
+                        builder: (context)=> Container(
+                        padding: EdgeInsets.all(30.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(selectopText,style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+                            const SizedBox(height: 30.0,),
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(context,
+                                  MaterialPageRoute( builder: (context)=> ResetPassMail(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(20.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Colors.grey.shade200,
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.mail_outline_outlined, size: 60.0,),
+
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(resetEmail,style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                                        Text("Have Password OTP sent via E-mail"),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height:20.0),
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(context,
+                                  MaterialPageRoute( builder: (context)=> ResetPassPhone(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(20.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Colors.grey.shade200,
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.phone_android_rounded, size: 60.0,),
+
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(resetPhone,style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                                        Text("Have Password OTP sent via phone"),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),);
+                    },
                     child: Text(
                       'Forgot PIN?',
                       style: TextStyle(color: Color.fromARGB(255, 0, 24, 1)),
