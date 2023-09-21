@@ -1,12 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:save_app/components/header_widget.dart';
+import 'package:save_app/controllers/signup_controllers.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SignUpController());
+    final _formKey= GlobalKey<FormState>();
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -19,10 +24,12 @@ class SignupScreen extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 30.0 - 10),
                     child: Form(
+                      key: _formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextFormField(
+                            controller: controller.firstname,
                             decoration: InputDecoration(
                                 label: Text('First Name'),
                                 prefixIcon: Icon(Icons.person_outline_rounded),
@@ -34,6 +41,7 @@ class SignupScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20.0),
                           TextFormField(
+                            controller: controller.sirname,
                             decoration: InputDecoration(
                                 label: Text('Sir Name'),
                                 prefixIcon: Icon(Icons.person_outline_rounded),
@@ -45,6 +53,7 @@ class SignupScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20.0),
                           TextFormField(
+                            controller: controller.email,
                             decoration: InputDecoration(
                                 label: Text('Email'),
                                 prefixIcon: Icon(Icons.email_rounded),
@@ -56,6 +65,7 @@ class SignupScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20.0),
                           TextFormField(
+                            controller: controller.phone,
                             decoration: InputDecoration(
                                 label: Text('Phone Number'),
                                 prefixIcon: Icon(Icons.numbers),
@@ -67,6 +77,7 @@ class SignupScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20.0),
                           TextFormField(
+                            controller: controller.password,
                             decoration: InputDecoration(
                                 label: Text('Password'),
                                 prefixIcon: Icon(Icons.password),
@@ -80,7 +91,10 @@ class SignupScreen extends StatelessWidget {
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                                onPressed: () {}, child: Text('Sign up'),
+                                onPressed: () {
+                                  SignUpController.instance.Registeruser(controller.firstname.text.trim(), controller.sirname.text,
+                                      controller.email.text, controller.phone.text, controller.password.text);
+                                }, child: Text('Sign up'),
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.all(20.0),
                                 fixedSize: Size(150, 60),

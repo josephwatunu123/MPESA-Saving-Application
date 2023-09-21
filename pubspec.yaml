@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  get:
   flutter:
     sdk: flutter
 
@@ -39,6 +40,7 @@ dependencies:
   firebase_core: ^2.15.1
   flutter_native_splash: ^2.3.2
   flutter_otp_text_field: ^1.1.1
+  firebase_auth: ^4.10.0
 
 dev_dependencies:
   flutter_test:
