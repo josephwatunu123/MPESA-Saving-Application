@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:save_app/components/header_widget.dart';
 import 'package:save_app/controllers/signup_controllers.dart';
+import 'package:save_app/components/classes.dart';
+
+import 'otp_screen.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -11,6 +14,8 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(SignUpController());
     final _formKey= GlobalKey<FormState>();
+    verifyUserPhone sendOTP= verifyUserPhone();
+    var phoneNumber= "";
 
     return SafeArea(
       child: Scaffold(
@@ -65,7 +70,13 @@ class SignupScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20.0),
                           TextFormField(
+                            keyboardType: TextInputType.phone,
                             controller: controller.phone,
+                            onChanged: (value){
+                              phoneNumber= value;
+                            },
+
+
                             decoration: InputDecoration(
                                 label: Text('Phone Number'),
                                 prefixIcon: Icon(Icons.numbers),
@@ -77,6 +88,7 @@ class SignupScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20.0),
                           TextFormField(
+                            keyboardType: TextInputType.number,
                             controller: controller.password,
                             decoration: InputDecoration(
                                 label: Text('Password'),
@@ -90,10 +102,15 @@ class SignupScreen extends StatelessWidget {
                           const SizedBox(height: 20.0),
                           SizedBox(
                             width: double.infinity,
+
+
+                            //BUTTON WITH OTP
                             child: ElevatedButton(
                                 onPressed: () {
-                                  SignUpController.instance.Registeruser(controller.firstname.text.trim(), controller.sirname.text,
-                                      controller.email.text, controller.phone.text, controller.password.text);
+                                  //CALL THE flutter auth function to send OTP
+                                  sendOTP.verificationPhone(phoneNumber);
+                                  //Take user to OTP Screen
+                                  Navigator.push(context, MaterialPageRoute( builder: (context)=> OTPScreen()));
                                 }, child: Text('Sign up'),
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.all(20.0),
