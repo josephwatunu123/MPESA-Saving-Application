@@ -14,8 +14,6 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(SignUpController());
     final _formKey= GlobalKey<FormState>();
-    verifyUserPhone sendOTP= verifyUserPhone();
-    var phoneNumber= "";
 
     return SafeArea(
       child: Scaffold(
@@ -73,7 +71,7 @@ class SignupScreen extends StatelessWidget {
                             keyboardType: TextInputType.phone,
                             controller: controller.phone,
                             onChanged: (value){
-                              phoneNumber= value;
+
                             },
 
 
@@ -107,10 +105,9 @@ class SignupScreen extends StatelessWidget {
                             //BUTTON WITH OTP
                             child: ElevatedButton(
                                 onPressed: () {
-                                  //CALL THE flutter auth function to send OTP
-                                  sendOTP.verificationPhone(phoneNumber);
-                                  //Take user to OTP Screen
-                                  Navigator.push(context, MaterialPageRoute( builder: (context)=> OTPScreen()));
+                                  if(_formKey.currentState!.validate()){
+                                    SignUpController.instance.Registeruser(controller.email.text.trim(), controller.password.text.trim());
+                                  }
                                 }, child: Text('Sign up'),
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.all(20.0),

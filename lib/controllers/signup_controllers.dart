@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:save_app/authentication/authentication.dart';
 
 
 class SignUpController extends GetxController{
@@ -13,8 +14,8 @@ class SignUpController extends GetxController{
   final phone = TextEditingController();
   final password = TextEditingController();
 
-  void Registeruser(String firstname, String sirname, String email, String phone, String password){
-    //firebase logic
+  void Registeruser(String email, String password){
+    AuthenticationRepository.instance.CreateUserWithEmailAndPassword(email, password);
 
 
   }
