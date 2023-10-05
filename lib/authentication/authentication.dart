@@ -43,6 +43,7 @@ class AuthenticationRepository extends GetxController{
     redirectTimer = Timer(Duration(minutes: 1), () {
       // Automatically log out the user after 5 minutes of inactivity
       _auth.signOut();
+      Get.offAll(()=>LoginPage());
     });
   }
 
