@@ -13,35 +13,53 @@ class AuthenticationRepository extends GetxController{
   late final Rx<User?> firebaseUser;
   late DateTime? lastLogoutTime;
   Timer? redirectTimer;
+  late StreamSubscription<User?> _userSubscription;
 
   @override
-  void onReady(){
-    firebaseUser= Rx<User?>(_auth.currentUser);
+  void onInit() {
+    firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.userChanges());
-    ever(firebaseUser, _setInitialScreen);
+    _userSubscription = firebaseUser.listen((user) {
+      if (user != null) {
+        // User logged in, start the inactivity timer
+        _startInactivityTimer();
+      } else {
+        // User logged out, cancel the timer
+        _cancelInactivityTimer();
+      }
+    });
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    _cancelInactivityTimer();
+    _userSubscription.cancel();
+    super.onClose();
+  }
+
+  void _startInactivityTimer() {
+    _cancelInactivityTimer(); // Cancel any existing timer
+    redirectTimer = Timer(Duration(minutes: 1), () {
+      // Automatically log out the user after 5 minutes of inactivity
+      _auth.signOut();
+    });
+  }
+
+  void _cancelInactivityTimer() {
+    redirectTimer?.cancel();
   }
 
   _setInitialScreen(User? user) {
-    if (user !=null) {
-      if (lastLogoutTime != null) {
-        final currentTime = DateTime.now();
-        final difference = currentTime.difference(lastLogoutTime!);
-        if (difference.inMinutes <= 2) {
-          // User has returned within 2 minutes, redirect to HomePage
-          Get.offAll(() => const HomePage());
-        }
-      }
-      Get.offAll(() => LoginPage());
-    } else {
-      lastLogoutTime = null;
-      Get.offAll(() => const HomePage());
-    }
+    user == null ? Get.offAll(() => LoginPage()) : Get.offAll(() => const HomePage());
   }
+
 
   Future<void> CreateUserWithEmailAndPassword(String email,String password)async{
     try{
     await _auth.createUserWithEmailAndPassword(email: email, password: password);
-    firebaseUser.value !=null? Get.offAll(()=>const HomePage()) :Get.to(()=> LoginPage());
+    Get.off(() => HomePage());
+
     } on FirebaseAuthException catch(e){
       final ex= SignUpWithEmailandPasswordFailure.code(e.code);
       print('FIREBASE AUTH EXCEPTION- ${ex.message}');
