@@ -5,13 +5,17 @@ import 'package:save_app/authentication/authentication.dart';
 import 'package:save_app/firebase_options.dart';
 import 'package:save_app/pages/login_page.dart';
 import 'package:save_app/pages/signup_page.dart';
+import 'package:save_app/controllers/otp_controller.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform )
-      .then((value) => Get.put(AuthenticationRepository()));
-  runApp(GetMaterialApp( // Wrap your MaterialApp with GetMaterialApp
-    key: UniqueKey(), // Specify a key for GetMaterialApp
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) {
+    Get.put(AuthenticationRepository());
+    Get.put(OTPController()); // Register OTPController
+  });
+  runApp(GetMaterialApp(
+    key: UniqueKey(),
     debugShowCheckedModeBanner: false,
     home: LoginPage(),
   ));
