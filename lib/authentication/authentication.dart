@@ -14,6 +14,7 @@ class AuthenticationRepository extends GetxController{
   late DateTime? lastLogoutTime;
   Timer? redirectTimer;
   late StreamSubscription<User?> _userSubscription;
+  var verificationId= ''.obs;
 
   @override
   void onInit() {
@@ -53,6 +54,34 @@ class AuthenticationRepository extends GetxController{
 
   _setInitialScreen(User? user) {
     user == null ? Get.offAll(() => LoginPage()) : Get.offAll(() => const HomePage());
+  }
+
+  Future<void> phoneAuthentication(String phone) async {
+    await _auth.verifyPhoneNumber(
+      phoneNumber: phone,
+        verificationCompleted: (credentials) async {
+        await _auth.signInWithCredential(credentials);
+        },
+        codeSent: (verificationId, resendToken){
+        this.verificationId.value= verificationId;
+        },
+        codeAutoRetrievalTimeout: (verificationId){
+          this.verificationId.value= verificationId;
+        },
+    verificationFailed: (e){
+        if(e.code=='Invalid-phone-number'){
+          Get.snackbar(('Error'), 'The provided phone number is not valid');
+        }else{
+          Get.snackbar('Error', 'Something went wrong. Try again.');
+        }
+    },
+    );
+  }
+
+  Future<bool> verifyOTP (String otp) async{
+    var credentials= await _auth
+        .signInWithCredential(PhoneAuthProvider.credential(verificationId: this.verificationId.value, smsCode: otp));
+    return credentials.user != null?true: false;
   }
 
 

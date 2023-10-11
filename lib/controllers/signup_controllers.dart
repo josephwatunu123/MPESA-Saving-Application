@@ -20,4 +20,9 @@ class SignUpController extends GetxController{
 
   }
 
+  void phoneAuthentication( String phone){
+    AuthenticationRepository.instance.phoneAuthentication(phone);
+  }
+
+
 }
