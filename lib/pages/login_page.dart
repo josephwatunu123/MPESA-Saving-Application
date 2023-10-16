@@ -54,9 +54,15 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 25),
 
             Container(
+              width: 300.0, // Adjust the width as needed
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0), // Adjust the radius as needed
+                border: Border.all(color: Colors.black, width: 2.0),
+              ),
               child: Form(
                 key: _formKey,
                 child: Column(
+
                   children: [
                     TextFormField(
                       keyboardType: TextInputType.phone,
