@@ -48,4 +48,11 @@ class User{
     'firstname': firstname,
     'lastname': lastname,
   };
+
+  static User fromJson(Map<String, dynamic> json)=> User(
+      id: json['id'],
+      firstname: json['firstname'],
+      lastname: json['lastname']
+  );
+
 }
