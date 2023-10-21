@@ -11,17 +11,41 @@ class newGoalControllers extends GetxController{
   final lastnamecont =TextEditingController();
 
 
-
   Future createUser({required String firstname, required String lastname}) async{
-    final docUser = FirebaseFirestore.instance.collection('users').doc('my-id');
+    firstname= firstncont.text;
+    lastname=lastnamecont.text;
+    final docUser = FirebaseFirestore.instance.collection('test').doc();
 
-    final json ={
-      'first name': firstname,
-      'last name': lastname
-    };
+    final user = User(
+      id: docUser.id,
+      firstname: firstname,
+      lastname: lastname
+    );
+    final json = user.toJson();
+
 
     await docUser.set(json);
+
+
   }
 
 
+}
+
+class User{
+  String id;
+  final String firstname;
+  final String lastname;
+
+  User({
+    this.id='',
+    required this.firstname,
+    required this.lastname
+});
+
+  Map<String, dynamic> toJson()=>{
+    'id': id,
+    'firstname': firstname,
+    'lastname': lastname,
+  };
 }

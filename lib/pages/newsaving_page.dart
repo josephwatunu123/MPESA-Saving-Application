@@ -1,4 +1,3 @@
-import 'dart:js_interop';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -54,7 +53,7 @@ class NewSaving extends StatelessWidget{
              SizedBox(height: 20.0),
             ElevatedButton(
             onPressed: () {
-              newGoalControllers controller = newGoalControllers(); // Create an instance
+              final controller = Get.find<newGoalControllers>(); // Create an instance
               controller.createUser(
                   firstname: controller.firstncont.text,
                   lastname: controller.lastnamecont.text);
