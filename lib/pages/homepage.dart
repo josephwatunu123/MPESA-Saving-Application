@@ -1,13 +1,17 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:save_app/controllers/newgoal_controllers.dart';
+import 'package:save_app/pages/newsaving_page.dart';
 
 import '../components/SavingCardWidget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       home: const MyHomePage(title: 'Home page'),
     );
@@ -19,10 +23,7 @@ void _showOptionsModal(BuildContext context) {
     builder: (BuildContext context) {
       return Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10.0),
-            topRight: Radius.circular(10.0),
-          ),
+          borderRadius: BorderRadius.circular(70.0),
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
@@ -31,7 +32,7 @@ void _showOptionsModal(BuildContext context) {
               ListTile(
                 title: Text('New Saving Goal'),
                 onTap: () {
-                  // Handle 'New Saving Goal' action
+                  Get.to(()=> NewSaving());
                   Navigator.pop(context); // Close the modal
                 },
               ),
@@ -66,7 +67,13 @@ class MyHomePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
       body: SingleChildScrollView(
-        child: SavingCardWidget(),
+        child: Column(
+          children:[
+            SavingCardWidget(),
+            SizedBox(height: 20.0),
+          ]
+        )
+
       ),
         floatingActionButton: FloatingActionButton(
           elevation: 10.0,
