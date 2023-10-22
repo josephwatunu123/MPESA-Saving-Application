@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:save_app/controllers/newgoal_controllers.dart';
@@ -9,20 +9,23 @@ import '../components/SavingCardWidget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return const MyHomePage(title: 'Home page');
+    return MaterialApp(
+      home: const MyHomePage(title: 'Home page'),
+    );
   }
 }
-
 void _showOptionsModal(BuildContext context) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
       return Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(70.0),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10.0),
+            topRight: Radius.circular(10.0),
+          ),
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
@@ -31,7 +34,7 @@ void _showOptionsModal(BuildContext context) {
               ListTile(
                 title: Text('New Saving Goal'),
                 onTap: () {
-                  Get.to(() => NewSaving());
+                  Get.to(()=> NewSaving());
                   Navigator.pop(context); // Close the modal
                 },
               ),
@@ -66,48 +69,16 @@ class MyHomePage extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
           body: SingleChildScrollView(
-          child: Column(
-          children: [
-            SavingCardWidget(),
-            SizedBox(height: 20.0),
-            StreamBuilder<List<User>>(
-              stream: readUsers(),
-              builder: (context, snapshot) {
-              if (snapshot.hasData) {
-              final users = snapshot.data!;
-              return ListView(
-            children: users.map(buildUser).toList(),
-            );
-              }else if(snapshot.hasError){
-                return Text('Error: ${snapshot.error}');
-              }
-    // Handle other cases (loading, error)
-              return CircularProgressIndicator();
-              },
-            )
-    ],
-    ),
-    ),
-        floatingActionButton: FloatingActionButton(
-        elevation: 10.0,
-          child: const Icon(Icons.add),
-            onPressed: () {
-            _showOptionsModal(context);
-          },
+            child: SavingCardWidget(),
           ),
-        ));;
-    }
-
-  Widget buildUser(User user) => ListTile(
-    title: Text(user.firstname), // Use the correct property name
-    subtitle: Text(user.lastname), // Use the correct property name
-  );
-
-  Stream<List<User>> readUsers() {
-    return FirebaseFirestore.instance
-        .collection('user')
-        .snapshots()
-        .map((snapshot) =>
-        snapshot.docs.map((doc) => User.fromJson(doc.data())).toList());
+          floatingActionButton: FloatingActionButton(
+            elevation: 10.0,
+            child: const Icon(Icons.add),
+            onPressed: () {
+              _showOptionsModal(context);
+            },
+          ),
+        )
+    );
   }
 }
