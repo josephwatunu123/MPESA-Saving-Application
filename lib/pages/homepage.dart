@@ -1,6 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:save_app/controllers/newgoal_controllers.dart';
+import 'package:save_app/pages/newsaving_page.dart';
 
 import '../components/SavingCardWidget.dart';
 
@@ -31,7 +34,7 @@ void _showOptionsModal(BuildContext context) {
               ListTile(
                 title: Text('New Saving Goal'),
                 onTap: () {
-                  // Handle 'New Saving Goal' action
+                  Get.to(()=> NewSaving());
                   Navigator.pop(context); // Close the modal
                 },
               ),
@@ -64,19 +67,18 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-      body: SingleChildScrollView(
-        child: SavingCardWidget(),
-      ),
-        floatingActionButton: FloatingActionButton(
-          elevation: 10.0,
-          child: const Icon(Icons.add),
-          onPressed: () {
-            _showOptionsModal(context);
-          },
-        ),
-    )
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: SavingCardWidget(),
+          ),
+          floatingActionButton: FloatingActionButton(
+            elevation: 10.0,
+            child: const Icon(Icons.add),
+            onPressed: () {
+              _showOptionsModal(context);
+            },
+          ),
+        )
     );
   }
 }
-

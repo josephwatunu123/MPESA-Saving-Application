@@ -41,6 +41,8 @@ dependencies:
   flutter_native_splash: ^2.3.2
   flutter_otp_text_field: ^1.1.1
   firebase_auth: ^4.10.0
+  cloud_firestore: ^4.9.3
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:
