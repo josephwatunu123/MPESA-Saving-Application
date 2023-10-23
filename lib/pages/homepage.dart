@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:save_app/controllers/newgoal_controllers.dart';
+import 'package:save_app/pages/TestCrud.dart';
 import 'package:save_app/pages/newsaving_page.dart';
+import 'package:save_app/pages/testread_page.dart';
 
 import '../components/SavingCardWidget.dart';
 
@@ -41,7 +43,7 @@ void _showOptionsModal(BuildContext context) {
               ListTile(
                 title: Text('Save Now'),
                 onTap: () {
-                  // Handle 'Save Now' action
+                  Get.to(()=> ReadTest());
                   Navigator.pop(context); // Close the modal
                 },
               ),
