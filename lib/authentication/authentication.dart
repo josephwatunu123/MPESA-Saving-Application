@@ -53,7 +53,7 @@ class AuthenticationRepository extends GetxController{
   }
 
   _setInitialScreen(User? user) {
-    user == null ? Get.offAll(() => LoginPage()) : Get.offAll(() => const HomePage());
+    user == null ? Get.offAll(() => LoginPage()) : Get.offAll(() =>  HomePage());
   }
 
   Future<void> phoneAuthentication(String phone) async {
