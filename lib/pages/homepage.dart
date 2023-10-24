@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:save_app/controllers/newgoal_controllers.dart';
 import 'package:save_app/pages/newsaving_page.dart';
+import 'package:save_app/pages/testread_page.dart';
 
 import '../components/SavingCardWidget.dart';
 
@@ -39,14 +40,14 @@ void _showOptionsModal(BuildContext context) {
                 },
               ),
               ListTile(
-                title: Text('Save Now'),
+                title: Text('Save Now (Currently view goals from db)'),
                 onTap: () {
-                  // Handle 'Save Now' action
+                  Get.to(()=> ReadTest());
                   Navigator.pop(context); // Close the modal
                 },
               ),
               ListTile(
-                title: Text('New Group'),
+                title: Text('New Group (Currently single goal info)'),
                 onTap: () {
                   // Handle 'New Group' action
                   Navigator.pop(context); // Close the modal
