@@ -49,7 +49,7 @@ void _showOptionsModal(BuildContext context) {
               ListTile(
                 title: Text('New Group (Currently single goal info)'),
                 onTap: () {
-                  // Handle 'New Group' action
+                  // Handle 'New Group' action0
                   Navigator.pop(context); // Close the modal
                 },
               ),

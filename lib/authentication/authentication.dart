@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:get/get.dart';
 import 'package:save_app/authentication/exeptions/emailPwdFailed.dart';
+import 'package:save_app/database/manageUserDetails.dart';
 import 'package:save_app/pages/homepage.dart';
 import 'package:save_app/pages/login_page.dart';
 import 'dart:async';
+
 
 
 class AuthenticationRepository extends GetxController{
@@ -16,6 +19,8 @@ class AuthenticationRepository extends GetxController{
   late StreamSubscription<User?> _userSubscription;
   var verificationId= ''.obs;
 
+
+
   @override
   void onInit() {
     firebaseUser = Rx<User?>(_auth.currentUser);
@@ -23,6 +28,9 @@ class AuthenticationRepository extends GetxController{
     _userSubscription = firebaseUser.listen((user) {
       if (user != null) {
         // User logged in, start the inactivity timer
+        print(user);
+        String userId= user.uid;
+        print("Mr Joseph this is the user "+userId);
         _startInactivityTimer();
       } else {
         // User logged out, cancel the timer
@@ -87,7 +95,8 @@ class AuthenticationRepository extends GetxController{
 
   Future<void> CreateUserWithEmailAndPassword(String email,String password)async{
     try{
-    await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      await _auth.createUserWithEmailAndPassword(email: email, password: password);
+
     Get.off(() => HomePage());
 
     } on FirebaseAuthException catch(e){
@@ -100,6 +109,20 @@ class AuthenticationRepository extends GetxController{
       throw ex;
     }
   }
+
+  Future<void> AddUserDetails(String firstname, String lastname, String email, String phone, String pass)async{
+    _userSubscription = firebaseUser.listen((user) async {
+      if (user != null) {
+        await ManageUserDetails(uid: user.uid).updateUserData(
+            firstname, lastname, email, phone, pass);
+      }
+
+    });
+
+
+  }
+
+
   Future<void> loginWithEmailAndPassword(String email, String password) async{
     try{
       await _auth.signInWithEmailAndPassword(email:email, password:password);
