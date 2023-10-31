@@ -8,7 +8,8 @@ class ReadTest extends StatelessWidget {
   List<String> docsIDs = [];
 
   Future getDocId() async {
-    await FirebaseFirestore.instance.collection('test').get().then(
+    DocumentReference testDocRef = FirebaseFirestore.instance.collection('test').doc('your_test_document_id');
+    await FirebaseFirestore.instance.collection('saving_goal').get().then(
           (snapshot) => snapshot.docs.forEach((document) {
         print(document.reference);
         docsIDs.add(document.reference.id);

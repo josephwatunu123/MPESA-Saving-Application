@@ -111,6 +111,7 @@ class AuthenticationRepository extends GetxController{
   }
 
   Future<void> AddUserDetails(String firstname, String lastname, String email, String phone, String pass)async{
+
     _userSubscription = firebaseUser.listen((user) async {
       if (user != null) {
         await ManageUserDetails(uid: user.uid).updateUserData(
