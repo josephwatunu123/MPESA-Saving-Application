@@ -12,3 +12,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 //   }
 
 
+class globalUser{
+
+  final String uid;
+
+  globalUser({required this.uid});
+
+}
