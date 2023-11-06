@@ -19,4 +19,17 @@ class ManageUserDetails{
 
     
   }
+
+  Future createSaveNowWallet()async{
+    CollectionReference TestCollection = FirebaseFirestore.instance.collection('test');
+    TestCollection.doc(uid).collection('user_goals').add(
+      {
+        'goalname': 'save now',
+        'amount': '0'
+      }
+    );
+    // CollectionReference userGoals = FirebaseFirestore.instance.collection('test').doc(uid).collection('user_goals');
+    return 'success';
+  }
+
 }

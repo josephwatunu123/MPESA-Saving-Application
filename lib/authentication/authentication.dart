@@ -125,6 +125,14 @@ class AuthenticationRepository extends GetxController{
 
   }
 
+  Future<void> CreateDefaultWallet()async{
+    _userSubscription= firebaseUser.listen((user) async{
+      if(user!=null) {
+        await ManageUserDetails(uid: user.uid).createSaveNowWallet();
+      }
+    });
+  }
+
 
   Future<void> loginWithEmailAndPassword(String email, String password) async{
     try{

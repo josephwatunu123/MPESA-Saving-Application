@@ -1,73 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:save_app/database/getUserDetails.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
 
-class ReadTest extends StatefulWidget {
-  @override
-  _ReadTestState createState() => _ReadTestState();
-}
+class ReadTest extends StatelessWidget {
 
-class _ReadTestState extends State<ReadTest> {
-  List<String> userGoals = [];
+
   String? userId;
+  var CurrentUser= FirebaseAuth.instance.currentUser;
+  final db= FirebaseFirestore.instance;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   fetchUserId();
-  // }
-  //
-  // String? getCurrentUser() {
-  //   User? user = FirebaseAuth.instance.currentUser;
-  //   if (user != null) {
-  //     String userId = user.uid;
-  //     return userId;
-  //   }
-  //   return null;
-  // }
-  //
-  // void fetchUserId() {
-  //   userId = getCurrentUser(); // Assign userId directly
-  //   if (userId != null) {
-  //     print('User ID: $userId');
-  //     fetchUserData();
-  //   } else {
-  //     print('User not signed in');
-  //   }
-  // }
-  //
-  // Future<void> fetchUserData() async {
-  //   try {
-  //     DocumentSnapshot documentSnapshot = (await FirebaseFirestore.instance
-  //         .collection('test')
-  //         .doc(userId)
-  //         .collection('user_goals')
-  //         .get()) as DocumentSnapshot<Object?>;
-  //
-  //     if (documentSnapshot.exists) {
-  //       QuerySnapshot usergoalsQuery = await FirebaseFirestore.instance
-  //       .collection('test').doc(userId).collection('user_goals').get();
-  //       print("usergoalquery print around here");
-  //       print(usergoalsQuery);
-  //
-  //       if(usergoalsQuery.docs.isNotEmpty){
-  //         userGoals= usergoalsQuery.docs.map((doc)=>doc.get('user_goals')as String).toList();
-  //       } else {
-  //         userGoals = [];
-  //       }
-  //     } else {
-  //       print("Document 'user_goals' doesn't exist.");
-  //       userGoals = [];
-  //     }
-  //     setState(() {});
-  //   } catch (e) {
-  //     print('Error fetching user data: $e');
-  //     userGoals = [];
-  //   }
-  // }
+
+
+  Future<String?> getDocId() async {
+    if(CurrentUser!=null){
+      userId= CurrentUser?.uid;
+      print('This user id: $userId');
+      return userId;
+
+    }
+    return null;
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,34 +33,69 @@ class _ReadTestState extends State<ReadTest> {
         child: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                itemCount: userGoals.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.all(15),
-                    height: 200,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      border: Border.all(color: Colors.black, width: 2.0),
-                      image: DecorationImage(
-                        image: AssetImage('lib/images/saving.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: ListTile(
-                      title: GetUserDetails(documentId: userGoals[index]),
-                      contentPadding: EdgeInsets.all(20),
-                      tileColor: Colors.black87,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      titleTextStyle: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w900,
-                        fontSize: 30,
-                      ),
-                    ),
+              child: FutureBuilder<String?>(
+                future: getDocId(), // Obtain the document ID
+                builder: (context, AsyncSnapshot<String?> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator(); // Show loading indicator while waiting for data
+                  }
+                  if (!snapshot.hasData || snapshot.data == null) {
+                    return Text("User ID not found");
+                  }
+                  String userId = snapshot.data!;
+                  return StreamBuilder<QuerySnapshot>(
+                    stream: db
+                        .collection('test')
+                        .doc(userId)
+                        .collection('user_goals')
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator(); // Show loading indicator while waiting for data
+                      }
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        return Text("No goals found for this user.");
+                      }
+                      List<DocumentSnapshot> docs = snapshot.data!.docs;
+                      return ListView.builder(
+                        itemCount: docs.length, // Set the number of items in the list
+                        itemBuilder: (context, index) {
+                          var goalData = docs[index].data() as Map<String, dynamic>; // Correctly cast the data
+                          return Container(
+                            margin: const EdgeInsets.all(15),
+                            height: 200,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                border: Border.all(color: Colors.black, width: 2.0),
+                                image: DecorationImage(
+                                    image: AssetImage('lib/images/saving.jpg'),
+                                    fit: BoxFit.cover
+                                )
+                            ),
+                            child: ListTile(
+                              title: Text(goalData['goalname'] ?? "No goal name"), // Display the goal name
+                              subtitle: Text('${goalData['amount'] ?? "0"}'), // Display the amount
+                              contentPadding: EdgeInsets.all(20), // Add padding to the ListTile content
+                              tileColor: Colors.black87, // Background color of the ListTile
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10), // Add rounded corners
+                              ),
+                              // You can customize text styles as well
+                              titleTextStyle: TextStyle(
+                                color: Colors.white, // Changed to white for visibility
+                                fontWeight: FontWeight.w900,
+                                fontSize: 30,
+                              ),
+                              subtitleTextStyle: TextStyle(
+                                color: Colors.white70, // Changed to white for visibility
+                                fontSize: 20,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   );
                 },
               ),
@@ -113,4 +105,5 @@ class _ReadTestState extends State<ReadTest> {
       ),
     );
   }
+
 }

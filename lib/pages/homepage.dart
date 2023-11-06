@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:save_app/controllers/newgoal_controllers.dart';
+import 'package:save_app/database/getUserDetails.dart';
 import 'package:save_app/pages/newsaving_page.dart';
 import 'package:save_app/pages/testread_page.dart';
 

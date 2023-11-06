@@ -23,6 +23,8 @@ class SignUpController extends GetxController{
         phone.text.trim(),
         password.toString().trim());
 
+    AuthenticationRepository.instance.CreateDefaultWallet();
+
 
   }
 
