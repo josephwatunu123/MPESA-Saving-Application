@@ -106,8 +106,8 @@ class SignupScreen extends StatelessWidget {
                             child: ElevatedButton(
                                 onPressed: () {
                                   if(_formKey.currentState!.validate()){
-                                    // SignUpController.instance.Registeruser(controller.email.text.trim(), controller.password.text.trim());
-                                    SignUpController.instance.phoneAuthentication(controller.phone.text.trim());
+                                    SignUpController.instance.Registeruser(controller.email.text.trim(), controller.password.text.trim());
+                                    // SignUpController.instance.phoneAuthentication(controller.phone.text.trim());
                                     Get.to(()=>OTPScreen());
                                   }
                                 }, child: Text('Sign up'),

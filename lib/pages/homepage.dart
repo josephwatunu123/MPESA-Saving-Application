@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:save_app/controllers/newgoal_controllers.dart';
+import 'package:save_app/database/getUserDetails.dart';
 import 'package:save_app/pages/newsaving_page.dart';
 import 'package:save_app/pages/testread_page.dart';
 
@@ -49,7 +50,7 @@ void _showOptionsModal(BuildContext context) {
               ListTile(
                 title: Text('New Group (Currently single goal info)'),
                 onTap: () {
-                  // Handle 'New Group' action
+                  // Handle 'New Group' action0
                   Navigator.pop(context); // Close the modal
                 },
               ),

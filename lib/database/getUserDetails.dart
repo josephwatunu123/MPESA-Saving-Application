@@ -1,31 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class GetUserDetails extends StatelessWidget{
-  final String documentId;
+class GetUserDetails extends StatefulWidget {
 
+  late final String documentId;
   GetUserDetails({required this.documentId});
 
-  String? firstname, lastname;
-
   @override
-  Widget build (BuildContext context){
-    CollectionReference test = FirebaseFirestore.instance.collection('test');
+  _SubCategoryClassState createState() => _SubCategoryClassState();
 
-    return FutureBuilder<DocumentSnapshot>(
-      future: test.doc(documentId).get(),
-      builder: ((context, snapshot){
-        if(snapshot.connectionState== ConnectionState.done){
-          Map<String, dynamic> data=
-              snapshot.data!.data() as Map<String, dynamic>;
+}
 
-          return Text('${data['firstname']}'+ ' '+'${data['lastname']}' );
-        }
-        return Text('loading');
+class _SubCategoryClassState extends State<GetUserDetails> {
+  final db= FirebaseFirestore.instance;
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+    body: StreamBuilder<QuerySnapshot>(
+    stream: db
+        .collection('test')
+        .doc(widget.documentId)
+        .collection('user_goals')
+        .snapshots(),
+      builder: (context, snapshot){
+      if(snapshot.hasData){
+        var docs= snapshot.data!.docs;
+        final goalData= docs as Map<String, dynamic>;
+        return Text('${goalData['goalname']} ${goalData['amount']}');
       }
-      ),
+      return Text("Data currently unavailable");
+      },
+    )
+    );}
 
-    );
-  }
 }
