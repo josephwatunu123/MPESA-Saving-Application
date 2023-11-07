@@ -6,6 +6,7 @@ import 'package:save_app/firebase_options.dart';
 import 'package:save_app/pages/login_page.dart';
 import 'package:save_app/pages/signup_page.dart';
 import 'package:save_app/controllers/otp_controller.dart';
+import 'package:save_app/pages/single_goal_screen.dart';
 
 
 void main() async {
@@ -17,7 +18,7 @@ void main() async {
   runApp(GetMaterialApp(
     key: UniqueKey(),
     debugShowCheckedModeBanner: false,
-    home: LoginPage(),
+    home: viewGoal(),
   ));
 }
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: viewGoal(),
     );
   }
 }

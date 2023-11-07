@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:save_app/controllers/newgoal_controllers.dart';
 import 'package:save_app/database/getUserDetails.dart';
 import 'package:save_app/pages/newsaving_page.dart';
+import 'package:save_app/pages/single_goal_screen.dart';
 import 'package:save_app/pages/testread_page.dart';
 
 import '../components/SavingCardWidget.dart';
@@ -65,8 +66,8 @@ class HomePage extends StatelessWidget {
                 ListTile(
                   title: Text('New Group (Currently single goal info)'),
                   onTap: () {
-                    // Handle 'New Group' action0
-                    Navigator.pop(context); // Close the modal
+                    Navigator.pop(context);
+                    Get.to(()=>viewGoal());
                   },
                 ),
               ],
