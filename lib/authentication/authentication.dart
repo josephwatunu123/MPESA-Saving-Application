@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:get/get.dart';
 import 'package:save_app/authentication/exeptions/emailPwdFailed.dart';
 import 'package:save_app/components/classes.dart';
+import 'package:save_app/controllers/newgoal_controllers.dart';
 import 'package:save_app/database/manageUserDetails.dart';
 import 'package:save_app/pages/homepage.dart';
 import 'package:save_app/pages/login_page.dart';
