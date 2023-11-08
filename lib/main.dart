@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:save_app/authentication/authentication.dart';
 import 'package:save_app/firebase_options.dart';
+import 'package:save_app/pages/homepage.dart';
 import 'package:save_app/pages/login_page.dart';
 import 'package:save_app/pages/signup_page.dart';
 import 'package:save_app/controllers/otp_controller.dart';
+import 'package:save_app/pages/single_goal_screen.dart';
 
 
 void main() async {

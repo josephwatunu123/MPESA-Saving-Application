@@ -19,3 +19,7 @@ class globalUser{
   globalUser({required this.uid});
 
 }
+
+class NewGoal{
+
+}
