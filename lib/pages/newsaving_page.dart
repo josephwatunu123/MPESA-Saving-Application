@@ -31,6 +31,7 @@ class NewSaving extends StatelessWidget{
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
               ),
               TextFormField(
+                keyboardType: TextInputType.number,
               controller: controller.amount,
               decoration: InputDecoration(
                 label: Text('Amount'),
@@ -64,6 +65,7 @@ class NewSaving extends StatelessWidget{
                   ),
                 SizedBox(height: 40.0),
                 TextFormField(
+                  keyboardType: TextInputType.text,
                 controller: controller.maturity,
                 decoration: InputDecoration(
                   label: Text('Mautrity date format dd-mm-yy'),
@@ -81,8 +83,9 @@ class NewSaving extends StatelessWidget{
               ElevatedButton(
               onPressed: () {
                 final controller = Get.find<newGoalControllers>();// Create an instance
+                int amountAsInt= int.parse(controller.amount.text);
                 controller.createNewGoal(
-                    amount: controller.amount.text,
+                    amount: amountAsInt,
                     goalname: controller.goalname.text,
                     maturity: controller.maturity.text,
                 );

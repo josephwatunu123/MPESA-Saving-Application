@@ -35,7 +35,7 @@ class newGoalControllers extends GetxController {
     _userSubscription.cancel(); // Don't forget to cancel the subscription when the controller is closed
   }
 
-  Future createNewGoal({required String amount, required String goalname, required String maturity}) async {
+  Future createNewGoal({required int amount, required String goalname, required String maturity}) async {
     final user = firebaseUser.value; // Get the current user from the Rx<User?>.
     if (user != null) {
       await TestCollection
