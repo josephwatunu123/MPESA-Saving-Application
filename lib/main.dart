@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:save_app/authentication/authentication.dart';
 import 'package:save_app/firebase_options.dart';
+import 'package:save_app/pages/homepage.dart';
 import 'package:save_app/pages/login_page.dart';
 import 'package:save_app/pages/signup_page.dart';
 import 'package:save_app/controllers/otp_controller.dart';
@@ -18,7 +19,7 @@ void main() async {
   runApp(GetMaterialApp(
     key: UniqueKey(),
     debugShowCheckedModeBanner: false,
-    home: viewGoal(),
+    home: LoginPage(),
   ));
 }
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: viewGoal(),
+      home: LoginPage(),
     );
   }
 }
