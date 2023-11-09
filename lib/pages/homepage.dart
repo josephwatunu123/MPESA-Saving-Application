@@ -114,38 +114,47 @@ class HomePage extends StatelessWidget {
                         itemCount: docs.length, // Set the number of items in the list
                         itemBuilder: (context, index) {
                           var goalData = docs[index].data() as Map<String, dynamic>; // Correctly cast the data
-                          return Container(
-                            margin: const EdgeInsets.all(15),
-                            height: 200,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                border: Border.all(color: Colors.black, width: 2.0),
-                                image: DecorationImage(
-                                    image: AssetImage('lib/images/saving.jpg'),
-                                    fit: BoxFit.cover
-                                )
+
+                          return GestureDetector(
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context)=> viewGoal()),
+                              );
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.all(15),
+                                height: 200,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    border: Border.all(color: Colors.black, width: 2.0),
+                                    image: DecorationImage(
+                                        image: AssetImage('lib/images/saving.jpg'),
+                                        fit: BoxFit.cover
+                                    )
+                                ),
+                                child: ListTile(
+                                  title: Text(goalData['goalname'] ?? "No goal name"), // Display the goal name
+                                  subtitle: Text('${goalData['amount'] ?? "0"}'), // Display the amount
+                                  contentPadding: EdgeInsets.all(20), // Add padding to the ListTile content
+                                  tileColor: Colors.black87, // Background color of the ListTile
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10), // Add rounded corners
+                                  ),
+                                  // You can customize text styles as well
+                                  titleTextStyle: TextStyle(
+                                    color: Colors.white, // Changed to white for visibility
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 30,
+                                  ),
+                                  subtitleTextStyle: TextStyle(
+                                    color: Colors.white70, // Changed to white for visibility
+                                    fontSize: 20,
+                                  ),
                             ),
-                            child: ListTile(
-                              title: Text(goalData['goalname'] ?? "No goal name"), // Display the goal name
-                              subtitle: Text('${goalData['amount'] ?? "0"}'), // Display the amount
-                              contentPadding: EdgeInsets.all(20), // Add padding to the ListTile content
-                              tileColor: Colors.black87, // Background color of the ListTile
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10), // Add rounded corners
-                              ),
-                              // You can customize text styles as well
-                              titleTextStyle: TextStyle(
-                                color: Colors.white, // Changed to white for visibility
-                                fontWeight: FontWeight.w900,
-                                fontSize: 30,
-                              ),
-                              subtitleTextStyle: TextStyle(
-                                color: Colors.white70, // Changed to white for visibility
-                                fontSize: 20,
-                              ),
-                            ),
-                          );
+                          ));
+
                         },
                       );
                     },
