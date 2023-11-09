@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 
 class MyPassFields extends StatelessWidget {
   final controller;
-  final bool obscureText;
+
 
   const MyPassFields({
     super.key,
     required this.controller,
-    required this.obscureText,
+
   });
 
   @override

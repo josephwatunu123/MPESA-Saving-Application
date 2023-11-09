@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:get/get.dart';
@@ -135,14 +136,22 @@ class AuthenticationRepository extends GetxController{
   }
 
 
-  Future<void> loginWithEmailAndPassword(String email, String password) async{
-    try{
-      await _auth.signInWithEmailAndPassword(email:email, password:password);
-    }on FirebaseAuthException catch(e){
+  Future<void> loginWithEmailAndPassword(String email, String password) async {
+    print('we are missing this pass $password but we have $email');
+      try{
+        await _auth.signInWithEmailAndPassword(email: email, password: password);
 
-    }catch (_){}
+        Get.off(() => HomePage());
+
+      } on FirebaseAuthException catch (e) {
+      print('Firebase Auth Exception: ${e.message}');
+    } catch (error) {
+      print('Errror: $error');
+    }
   }
 
+
   Future<void> logout() async => await _auth.signOut();
-   
+
+
 }

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:save_app/components/passwordfields.dart';
 import 'package:save_app/pages/reset_through_mail.dart';
 import 'package:save_app/pages/reset_through_phone.dart';
 import 'package:save_app/pages/signup_page.dart';
 import 'package:save_app/components/constants.dart';
+import '../components/loginpg_forgotpinbtn.dart';
+import '../components/resetpass_mail.dart';
+import '../components/resetpass_phone.dart';
 import '../controllers/login_controllers.dart';
 import 'otp_screen.dart'; // Make sure the import path is correct.
 
@@ -25,7 +29,7 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 5),
             Align(
               alignment: Alignment.topCenter,
               child: Container(
@@ -44,7 +48,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 0),
 
             // Welcome back Text
             Text(
@@ -56,8 +60,7 @@ class LoginPage extends StatelessWidget {
             Container(
               width: 300.0, // Adjust the width as needed
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0), // Adjust the radius as needed
-                border: Border.all(color: Colors.black, width: 2.0),
+
               ),
               child: Form(
                 key: _formKey,
@@ -65,140 +68,42 @@ class LoginPage extends StatelessWidget {
 
                   children: [
                     TextFormField(
-                      keyboardType: TextInputType.phone,
-                      controller: controller.phone,
-                      decoration: InputDecoration(
-                        labelText: 'Enter country code then phone No',
-                        prefixIcon: Icon(Icons.phone),
-                        border: OutlineInputBorder(),
-                        labelStyle: TextStyle(color: Colors.black87),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 2.0,
-                            color: Colors.lightBlue,
-                          ),
-                        ),
+                      keyboardType: TextInputType.emailAddress,
+                      controller: controller.email,
+                      decoration: loginpg(),
+                    ),
+                    const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 0),
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    controller: controller.password,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(
+                      labelText: 'Enter Pin',
+                      prefixIcon: Icon(Icons.password),
+                      labelStyle: TextStyle(color: Colors.black),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                        BorderSide(),
                       ),
                     ),
+                  ),
+                )
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(22.0)),
-                        builder: (context) => Container(
-                          padding: EdgeInsets.all(30.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                selectopText,
-                                style: const TextStyle(
-                                    fontSize: 20.0, fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(height: 30.0),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ResetPassMail(),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(20.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    color: Colors.grey.shade200,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      const Icon(Icons.mail_outline_outlined,
-                                          size: 60.0),
-                                      Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            resetEmail,
-                                            style: const TextStyle(
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text("Have Password OTP sent via E-mail"),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 20.0),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ResetPassPhone(),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(20.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    color: Colors.grey.shade200,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      const Icon(Icons.phone_android_rounded,
-                                          size: 60.0),
-                                      Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            resetPhone,
-                                            style: const TextStyle(
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text("Have Password OTP sent via phone"),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'Forgot PIN?',
-                      style: TextStyle(color: Color.fromARGB(255, 0, 24, 1)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 2),
+            Forgotpinbtn(),
+            const SizedBox(height: 5),
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  controller.phoneAuthentication(controller.phone.text.trim());
-                  Get.to(() => OTPScreen());
+                  controller.userAuthentication(controller.email.text.trim(), controller.password.text.trim());
                 }
               },
               child: Text("Sign In"),
@@ -214,7 +119,7 @@ class LoginPage extends StatelessWidget {
                 side: BorderSide(color: Colors.black, width: 2),
               ),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 20),
             TextButton(
               onPressed: () {
                 Navigator.push(
@@ -241,5 +146,20 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  InputDecoration loginpg() {
+    return InputDecoration(
+                      labelText: 'Enter your email',
+                      prefixIcon: Icon(Icons.email),
+                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Colors.black87),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2.0,
+                          color: Colors.lightBlue,
+                        ),
+                      ),
+                    );
   }
 }
