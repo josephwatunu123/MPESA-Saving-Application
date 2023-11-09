@@ -2,6 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class viewGoal extends StatelessWidget{
+
+  final Map<String, dynamic>goalData;
+
+  viewGoal({Key? key ,required this.goalData}): super (key: key);
+
+
   static const descTextStyle = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.bold,
@@ -41,7 +47,7 @@ class viewGoal extends StatelessWidget{
                       left: 0,
                       child: Padding(padding: EdgeInsets.all(10),
                         child: Text(
-                          'Goal Name',
+                          goalData['goalname']??'Name unavailable',
                           style: TextStyle(
                             fontSize: 27, fontWeight: FontWeight.bold, color: Colors.white
                           ),
@@ -70,8 +76,8 @@ class viewGoal extends StatelessWidget{
                   ),
                   Column(
                     children: [
-                      Text('500'),
-                      Text('5000'),
+                      Text(goalData[''].toString()??'0'),
+                      Text(goalData['amount'].toString()??'0'),
                     ],
                   )
                 ],

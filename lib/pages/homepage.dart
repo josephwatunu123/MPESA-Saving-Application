@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
                   title: Text('New Group (Currently single goal info)'),
                   onTap: () {
                     Navigator.pop(context);
-                    Get.to(()=>viewGoal());
+
                   },
                 ),
               ],
@@ -117,10 +117,7 @@ class HomePage extends StatelessWidget {
 
                           return GestureDetector(
                             onTap: (){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context)=> viewGoal()),
-                              );
+                              Get.to(() => viewGoal(goalData: goalData));
                             },
                             child: Container(
                               margin: const EdgeInsets.all(15),
