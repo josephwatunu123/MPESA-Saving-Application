@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:get/get.dart';
 import 'package:save_app/authentication/exeptions/emailPwdFailed.dart';
@@ -9,6 +12,7 @@ import 'package:save_app/database/manageUserDetails.dart';
 import 'package:save_app/pages/homepage.dart';
 import 'package:save_app/pages/login_page.dart';
 import 'dart:async';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 
@@ -135,19 +139,33 @@ class AuthenticationRepository extends GetxController{
     });
   }
 
-
   Future<void> loginWithEmailAndPassword(String email, String password) async {
+    const int toastShort = 2; // 2 seconds
+    const int toastLong = 5; // 5 seconds
     print('we are missing this pass $password but we have $email');
-      try{
-        await _auth.signInWithEmailAndPassword(email: email, password: password);
-
-        Get.off(() => HomePage());
-
-      } on FirebaseAuthException catch (e) {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      Get.off(() => HomePage());
+    } on FirebaseAuthException catch (e) {
       print('Firebase Auth Exception: ${e.message}');
+      showToast(" ${e.message} or missing value", toastLong);
+
     } catch (error) {
-      print('Errror: $error');
+      print('Error: $error');
+      showToast("Error ${error}", toastLong);
     }
+  }
+
+  // Show a toast message using fluttertoast
+  void showToast(String message, int duration) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT, // You can change the duration if needed
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: duration,
+      backgroundColor: Colors.blueGrey, // Customize the background color
+      textColor: Colors.white, // Customize the text color
+    );
   }
 
 
