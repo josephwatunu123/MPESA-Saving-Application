@@ -76,7 +76,7 @@ class viewGoal extends StatelessWidget{
                   ),
                   Column(
                     children: [
-                      Text(goalData[''].toString()??'0'),
+                      Text(goalData['deposit'].toString()??'0'),
                       Text(goalData['amount'].toString()??'0'),
                     ],
                   )

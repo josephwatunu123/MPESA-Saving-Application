@@ -45,6 +45,7 @@ class newGoalControllers extends GetxController {
         'goalname': goalname,
         'amount': amount,
         'maturity': maturity,
+        'deposit': 0,
       });
     } else {
       // Handle the case where there is no user logged in.
