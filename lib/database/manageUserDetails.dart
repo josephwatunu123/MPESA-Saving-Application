@@ -26,12 +26,23 @@ class ManageUserDetails{
     TestCollection.doc(uid).collection('user_goals').add(
       {
         'goalname': 'save now',
-        'amount': '0'
+        'amount': '0',
+        'goalId': uid,
       }
     );
-    // CollectionReference userGoals = FirebaseFirestore.instance.collection('test').doc(uid).collection('user_goals');
     return 'success';
   }
+
+  Future<void> createTransactionDocument() async {
+    CollectionReference testCollection = FirebaseFirestore.instance.collection('test');
+    testCollection.doc(uid).collection('Transactions').add(
+      {
+        'Joined':FieldValue.serverTimestamp()
+      }
+    );
+    print('Transaction Doc Creation worked');
+  }
+
 
   Future<void> DeleteGoalComplete(String required_id) async {
     try {

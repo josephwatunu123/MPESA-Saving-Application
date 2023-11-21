@@ -139,6 +139,15 @@ class AuthenticationRepository extends GetxController{
     });
   }
 
+  Future<void> TransactionHistoryDoc()async{
+    _userSubscription= firebaseUser.listen((user) async{
+      if(user!=null) {
+        await ManageUserDetails(uid: user.uid).createTransactionDocument();
+      }
+    });
+
+  }
+
   Future<void> loginWithEmailAndPassword(String email, String password) async {
     const int toastShort = 2; // 2 seconds
     const int toastLong = 5; // 5 seconds
@@ -156,11 +165,11 @@ class AuthenticationRepository extends GetxController{
     }
   }
 
-  // Show a toast message using fluttertoast
+
   void showToast(String message, int duration) {
     Fluttertoast.showToast(
       msg: message,
-      toastLength: Toast.LENGTH_SHORT, // You can change the duration if needed
+      toastLength: Toast.LENGTH_SHORT, 
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: duration,
       backgroundColor: Colors.blueGrey, // Customize the background color

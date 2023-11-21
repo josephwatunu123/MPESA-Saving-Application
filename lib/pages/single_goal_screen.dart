@@ -270,7 +270,7 @@ class viewGoal extends StatelessWidget{
                                 onPressed: () {
                                   AuthenticationRepository.instance.deleteGoal(goalData);
                                   Navigator.pop(context, 'OK');
-                                  Get.to(HomePage());
+                                  Get.to(() => HomePage());
                                 },
                                 child: const Text('OK'),
                               ),

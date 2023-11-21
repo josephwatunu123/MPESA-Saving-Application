@@ -24,6 +24,7 @@ class SignUpController extends GetxController{
         password.toString().trim());
 
     AuthenticationRepository.instance.CreateDefaultWallet();
+    AuthenticationRepository.instance.TransactionHistoryDoc();
 
 
   }
