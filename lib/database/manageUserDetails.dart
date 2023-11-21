@@ -33,4 +33,15 @@ class ManageUserDetails{
     return 'success';
   }
 
+  Future<void> DeleteGoalComplete(String required_id) async {
+    try {
+      CollectionReference TestCollection = FirebaseFirestore.instance.collection('test');
+      await TestCollection.doc(uid).collection('user_goals').doc(required_id).delete();
+      print('Document deleted successfully!');
+    } catch (e) {
+      print('Error deleting goal: $e');
+    }
+  }
+
+
 }

@@ -172,4 +172,22 @@ class AuthenticationRepository extends GetxController{
   Future<void> logout() async => await _auth.signOut();
 
 
+
+  void deleteGoal(Map<String, dynamic> goalData) async {
+    print('Entering deleteGoal function');
+    String idForDelete = goalData['goalId'].toString();
+    print('Goal ID for deletion: $idForDelete');
+    print('Current user: ${firebaseUser.value}');
+
+    User? user = firebaseUser.value;
+
+    if (user != null) {
+      print('User is not null. Calling DeleteGoalComplete.');
+      await ManageUserDetails(uid: user.uid).DeleteGoalComplete(idForDelete);
+    }
+  }
+
+
+
+
 }

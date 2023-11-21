@@ -35,9 +35,10 @@ class newGoalControllers extends GetxController {
     _userSubscription.cancel(); // Don't forget to cancel the subscription when the controller is closed
   }
 
-  Future createNewGoal({required int amount, required String goalname, required String maturity}) async {
+  Future<String> createNewGoal({required int amount, required String goalname, required String maturity}) async {
     final user = firebaseUser.value; // Get the current user from the Rx<User?>.
     if (user != null) {
+      final DocumentReference<Map<String, dynamic>> newGoalDocRef =
       await TestCollection
           .doc(user.uid) // Use the UID of the user.
           .collection('user_goals')
@@ -47,8 +48,18 @@ class newGoalControllers extends GetxController {
         'maturity': maturity,
         'deposit': 0,
       });
+
+      // Extract the newly created document ID
+      final String goalId = newGoalDocRef.id;
+
+      // Update the document with the goal ID
+      await newGoalDocRef.update({'goalId': goalId});
+
+      return goalId; // Return the goal ID
     } else {
       // Handle the case where there is no user logged in.
+      return ''; // Or handle it based on your requirements
     }
   }
+
 }

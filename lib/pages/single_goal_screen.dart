@@ -1,11 +1,21 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:save_app/authentication/authentication.dart';
+import 'package:save_app/components/goal_delete_confirmation_card.dart';
+import 'package:save_app/components/modalContexts_homepage.dart';
+import 'package:save_app/pages/deposit_money_screen.dart';
+import 'package:save_app/pages/homepage.dart';
 
 class viewGoal extends StatelessWidget{
 
   final Map<String, dynamic>goalData;
 
   viewGoal({Key? key ,required this.goalData}): super (key: key);
+
+
 
 
   static const descTextStyle = TextStyle(
@@ -19,9 +29,13 @@ class viewGoal extends StatelessWidget{
     color: Colors.black,
 
   );
+
+ ModalContexts saveContext = ModalContexts();
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -116,7 +130,9 @@ class viewGoal extends StatelessWidget{
                       OutlinedButton(
                         child: Text('Save Now',
                         style: buttondec),
-                        onPressed: (){},)
+                        onPressed: (){
+                          saveContext.showSaveMoneyInput(context);
+                        },)
                     ],
                   )
                 ],
@@ -135,9 +151,9 @@ class viewGoal extends StatelessWidget{
                 children: [
                   Column(
                     children: [
-                      Text('Add from Save now',
+                      Text('Transfer to a Goal',
                         style: descTextStyle,),
-                      Text('move money from save now'),
+                      Text('move money to a goal'),
                     ],
                   ),
                   Column(
@@ -145,7 +161,9 @@ class viewGoal extends StatelessWidget{
                       OutlinedButton(
                         child: Text('Transfer',
                             style: buttondec),
-                        onPressed: (){},)
+                        onPressed: (){
+                          saveContext.showTransferMoney(context);
+                        },)
                     ],
                   )
                 ],
@@ -164,9 +182,9 @@ class viewGoal extends StatelessWidget{
                 children: [
                   Column(
                     children: [
-                      Text('Withdraw',
+                      Text('Withdraw Funds',
                         style: descTextStyle,),
-                      Text('Move money from goal to MPESA'),
+                      Text('Move money to MPESA'),
                     ],
                   ),
                   Column(
@@ -174,7 +192,9 @@ class viewGoal extends StatelessWidget{
                       OutlinedButton(
                         child: Text('Withdraw',
                             style: buttondec),
-                        onPressed: (){},)
+                        onPressed: (){
+                          saveContext.showWidthdrawMoney(context);
+                        },)
                     ],
                   )
                 ],
@@ -234,9 +254,29 @@ class viewGoal extends StatelessWidget{
                           "Delete",
                           style: TextStyle(color: Colors.redAccent),
                         ),
-                        onPressed:(){
-
-                        },
+                        onPressed: () => showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(20.0)),
+                            shadowColor: Colors.blueGrey,
+                            title: const Text('Delete Goal?'),
+                            content: const Text('Are you sure you want to delete this goal? Note that funds will be transfered to \'save now\' wallet'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, 'Cancel'),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  AuthenticationRepository.instance.deleteGoal(goalData);
+                                  Navigator.pop(context, 'OK');
+                                  Get.to(HomePage());
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        ),
                       )
                     ],
                   ),
