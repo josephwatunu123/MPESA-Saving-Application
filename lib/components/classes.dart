@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 //
 // class verifyUserPhone{
 //   void verificationPhone(phoneNumber) async{
@@ -22,4 +24,16 @@ class globalUser{
 
 class NewGoal{
 
+}
+class ShowToast{
+  void showToast(String message, int duration) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: duration,
+      backgroundColor: Colors.green, // Customize the background color
+      textColor: Colors.white, // Customize the text color
+    );
+  }
 }

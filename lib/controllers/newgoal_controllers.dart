@@ -32,7 +32,7 @@ class newGoalControllers extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    _userSubscription.cancel(); // Don't forget to cancel the subscription when the controller is closed
+    _userSubscription.cancel();
   }
 
   Future<String> createNewGoal({required int amount, required String goalname, required String maturity}) async {

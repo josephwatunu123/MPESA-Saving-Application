@@ -2,10 +2,16 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:save_app/controllers/savenow_controllers.dart';
 
 class ModalContexts {
 
-  void showSaveMoneyInput(BuildContext context){
+  void showSaveMoneyInput(BuildContext context, String goalId){
+    final String idgotten= goalId;
+    print("The ID we have is $goalId");
+    final controller = Get.put(SaveNowController());
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -28,13 +34,15 @@ class ModalContexts {
                       fontWeight: FontWeight.w700),),
                 const SizedBox(height: 20.0),
                 TextFormField(
+                  controller: controller.amountEntered,
                   keyboardType: TextInputType.number,
                   decoration: amount_saveDecoration(),
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: (){
-
+                    SaveNowController.instance.UpdateAmount(controller.amountEntered.text, idgotten);
+                    Navigator.pop(context);
                   },
                   child:Text('Save'),
                   style: ElevatedButton.styleFrom(

@@ -177,7 +177,6 @@ class AuthenticationRepository extends GetxController{
     );
   }
 
-
   Future<void> logout() async => await _auth.signOut();
 
 
@@ -196,6 +195,13 @@ class AuthenticationRepository extends GetxController{
     }
   }
 
+  Future<void> updateGoalDeposit({required String amount, required String gid}) async{
+    print("We reached auth doc amount is $amount");
+    final user = firebaseUser.value;
+    if(user!= null){
+        await ManageUserDetails(uid: user.uid).updateDepoAmt(amount, gid);
+    }
+  }
 
 
 

@@ -131,7 +131,7 @@ class viewGoal extends StatelessWidget{
                         child: Text('Save Now',
                         style: buttondec),
                         onPressed: (){
-                          saveContext.showSaveMoneyInput(context);
+                          saveContext.showSaveMoneyInput(context, goalData['goalId']);
                         },)
                     ],
                   )
