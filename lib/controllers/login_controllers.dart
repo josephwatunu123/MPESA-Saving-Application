@@ -6,9 +6,10 @@ import '../authentication/authentication.dart';
 class loginController extends GetxController{
   static loginController get instance => Get.find();
 
-  final phone= TextEditingController();
+  final email= TextEditingController();
+  final password= TextEditingController();
 
-  void phoneAuthentication( String phone){
-    AuthenticationRepository.instance.phoneAuthentication(phone);
+  void userAuthentication( String email, String password){
+    AuthenticationRepository.instance.loginWithEmailAndPassword(email, password);
   }
 }

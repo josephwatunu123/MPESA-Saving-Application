@@ -1,4 +1,8 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:get/get.dart';
 import 'package:save_app/authentication/exeptions/emailPwdFailed.dart';
@@ -8,6 +12,7 @@ import 'package:save_app/database/manageUserDetails.dart';
 import 'package:save_app/pages/homepage.dart';
 import 'package:save_app/pages/login_page.dart';
 import 'dart:async';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 
@@ -134,15 +139,70 @@ class AuthenticationRepository extends GetxController{
     });
   }
 
+  Future<void> TransactionHistoryDoc()async{
+    _userSubscription= firebaseUser.listen((user) async{
+      if(user!=null) {
+        await ManageUserDetails(uid: user.uid).createTransactionDocument();
+      }
+    });
 
-  Future<void> loginWithEmailAndPassword(String email, String password) async{
-    try{
-      await _auth.signInWithEmailAndPassword(email:email, password:password);
-    }on FirebaseAuthException catch(e){
+  }
 
-    }catch (_){}
+  Future<void> loginWithEmailAndPassword(String email, String password) async {
+    const int toastShort = 2; // 2 seconds
+    const int toastLong = 5; // 5 seconds
+    print('we are missing this pass $password but we have $email');
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      Get.off(() => HomePage());
+    } on FirebaseAuthException catch (e) {
+      print('Firebase Auth Exception: ${e.message}');
+      showToast(" ${e.message} or missing value", toastLong);
+
+    } catch (error) {
+      print('Error: $error');
+      showToast("Error ${error}", toastLong);
+    }
+  }
+
+
+  void showToast(String message, int duration) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT, 
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: duration,
+      backgroundColor: Colors.blueGrey, // Customize the background color
+      textColor: Colors.white, // Customize the text color
+    );
   }
 
   Future<void> logout() async => await _auth.signOut();
-   
+
+
+
+  void deleteGoal(Map<String, dynamic> goalData) async {
+    print('Entering deleteGoal function');
+    String idForDelete = goalData['goalId'].toString();
+    print('Goal ID for deletion: $idForDelete');
+    print('Current user: ${firebaseUser.value}');
+
+    User? user = firebaseUser.value;
+
+    if (user != null) {
+      print('User is not null. Calling DeleteGoalComplete.');
+      await ManageUserDetails(uid: user.uid).DeleteGoalComplete(idForDelete);
+    }
+  }
+
+  Future<void> updateGoalDeposit({required String amount, required String gid}) async{
+    print("We reached auth doc amount is $amount");
+    final user = firebaseUser.value;
+    if(user!= null){
+        await ManageUserDetails(uid: user.uid).updateDepoAmt(amount, gid);
+    }
+  }
+
+
+
 }
