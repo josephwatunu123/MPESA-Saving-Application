@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:save_app/authentication/authentication.dart';
+import 'package:save_app/components/common_boxDecoration.dart';
 import 'package:save_app/components/goal_delete_confirmation_card.dart';
 import 'package:save_app/components/modalContexts_homepage.dart';
 import 'package:save_app/pages/deposit_money_screen.dart';
@@ -16,7 +17,7 @@ class viewGoal extends StatelessWidget{
   viewGoal({Key? key ,required this.goalData}): super (key: key);
 
 
-
+  boxDecoration boxdecoration = boxDecoration();
 
   static const descTextStyle = TextStyle(
     color: Colors.black,
@@ -74,7 +75,7 @@ class viewGoal extends StatelessWidget{
             ),
             SizedBox(height: 17),
             Container(
-              padding: EdgeInsets.all(15),
+              padding: EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -108,12 +109,7 @@ class viewGoal extends StatelessWidget{
             ),
             SizedBox(height: 15),
             Container(
-              decoration: BoxDecoration(
-                border: Border( bottom: BorderSide(
-                  color: Colors.green,
-                  width: 1.5
-                ))
-              ),
+              decoration: boxdecoration.buildBoxDecoration(),
               padding: EdgeInsets.all(15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,12 +135,7 @@ class viewGoal extends StatelessWidget{
               ),
             ),
             Container(
-              decoration: BoxDecoration(
-                  border: Border( bottom: BorderSide(
-                      color: Colors.green,
-                      width: 1.5
-                  ))
-              ),
+              decoration: boxdecoration.buildBoxDecoration(),
               padding: EdgeInsets.all(15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -170,12 +161,7 @@ class viewGoal extends StatelessWidget{
               ),
             ),
             Container(
-              decoration: BoxDecoration(
-                  border: Border( bottom: BorderSide(
-                      color: Colors.green,
-                      width: 1.5
-                  ))
-              ),
+              decoration: boxdecoration.buildBoxDecoration(),
               padding: EdgeInsets.all(15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -201,12 +187,7 @@ class viewGoal extends StatelessWidget{
               ),
             ),
             Container(
-              decoration: BoxDecoration(
-                  border: Border( bottom: BorderSide(
-                      color: Colors.green,
-                      width: 1.5
-                  ))
-              ),
+              decoration: boxdecoration.buildBoxDecoration(),
               padding: EdgeInsets.all(15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -230,12 +211,7 @@ class viewGoal extends StatelessWidget{
               ),
             ),
             Container(
-              decoration: BoxDecoration(
-                  border: Border( bottom: BorderSide(
-                      color: Colors.green,
-                      width: 1.5
-                  ))
-              ),
+              decoration: boxdecoration.buildBoxDecoration(),
               padding: EdgeInsets.all(15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -290,4 +266,6 @@ class viewGoal extends StatelessWidget{
       
     );
   }
+
+
 }

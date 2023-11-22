@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:save_app/controllers/newgoal_controllers.dart';
 import 'package:save_app/database/getUserDetails.dart';
 import 'package:save_app/pages/newsaving_page.dart';
+import 'package:save_app/pages/profile_page.dart';
 import 'package:save_app/pages/single_goal_screen.dart';
 import 'package:save_app/pages/testread_page.dart';
 
@@ -159,10 +160,11 @@ class HomePage extends StatelessWidget {
                 },
               ),
             ),
+
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
-                    padding: EdgeInsets.only(right: 16, bottom: 25)  ,
+                    padding: EdgeInsets.only(right: 20, bottom: 20)  ,
                   child:FloatingActionButton(
                   elevation: 10.0,
                   child: const Icon(Icons.add),
@@ -175,6 +177,28 @@ class HomePage extends StatelessWidget {
 
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: 0, // Set the current index (first icon) initially
+        onTap: (int index) {
+          // Handle taps on the bottom navigation items
+          if (index == 0) {
+            // Home icon tapped, do nothing (already on the home page)
+          } else if (index == 1) {
+            // Profile icon tapped, navigate to the profile page
+            Get.to(() => profilePage(userId: userId));
+          }
+        },
       ),
     );
   }
