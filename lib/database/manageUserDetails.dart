@@ -83,5 +83,19 @@ class ManageUserDetails{
     }
   }
 
+  Future<void> recordDepositTransaction(String depoAmount) async{
+    print("Function to create tranasction called");
+    print("We also got the amount for record $depoAmount");
+    CollectionReference testCollection = FirebaseFirestore.instance.collection('test');
+    testCollection.doc(uid).collection('Transactions').add(
+        {
+          'Deposited':'Deposited $depoAmount',
+          'Time':FieldValue.serverTimestamp()
+        }
+    );
+    print('Deposit Transaction Doc Creation worked');
+
+  }
+
 
 }

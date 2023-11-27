@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:save_app/authentication/authentication.dart';
+import 'package:save_app/pages/transactions_history_screen.dart';
 
 class profilePage extends StatelessWidget {
   final String? userId;
@@ -101,7 +103,9 @@ class profilePage extends StatelessWidget {
                               children: [
                                 IconButton(
                                   icon: const Icon(Icons.access_time),
-                                  onPressed: (){},
+                                  onPressed: (){
+                                    Get.to(()=>TransactionsPage(uid: userId));
+                                  },
                                   )
                               ],
                             )

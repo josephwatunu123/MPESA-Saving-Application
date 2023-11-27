@@ -12,4 +12,8 @@ class SaveNowController extends GetxController{
     print("We reached the controlelrs and passed amoung ${amountEntered.text}");
     await AuthenticationRepository.instance.updateGoalDeposit(amount: amount, gid: gid);
   }
+
+  void uploadDepositRecord(String amount)async{
+    await AuthenticationRepository.instance.depositRecord(amount: amount);
+  }
 }

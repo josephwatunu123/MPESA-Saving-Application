@@ -42,6 +42,7 @@ class ModalContexts {
                 ElevatedButton(
                   onPressed: (){
                     SaveNowController.instance.UpdateAmount(controller.amountEntered.text, idgotten);
+                    SaveNowController.instance.uploadDepositRecord(controller.amountEntered.text);
                     Navigator.pop(context);
                   },
                   child:Text('Save'),
