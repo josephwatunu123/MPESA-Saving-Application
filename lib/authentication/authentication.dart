@@ -204,5 +204,13 @@ class AuthenticationRepository extends GetxController{
   }
 
 
+  Future<void> depositRecord({required String amount}) async{
+    print("We reached auth doc amount is $amount");
+    final user = firebaseUser.value;
+    if(user!= null){
+      await ManageUserDetails(uid: user.uid).recordDepositTransaction(amount);
+    }
+  }
+
 
 }
