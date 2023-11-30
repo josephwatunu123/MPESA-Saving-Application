@@ -16,4 +16,9 @@ class SaveNowController extends GetxController{
   void uploadDepositRecord(String amount)async{
     await AuthenticationRepository.instance.depositRecord(amount: amount);
   }
+
+  void initiateMpesa()async{
+    print("Method to instantiate MPESA CALLED");
+    await AuthenticationRepository.instance.startMpesaTransaction();
+  }
 }

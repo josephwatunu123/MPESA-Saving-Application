@@ -43,6 +43,7 @@ class ModalContexts {
                   onPressed: (){
                     SaveNowController.instance.UpdateAmount(controller.amountEntered.text, idgotten);
                     SaveNowController.instance.uploadDepositRecord(controller.amountEntered.text);
+                    SaveNowController.instance.initiateMpesa();
                     Navigator.pop(context);
                   },
                   child:Text('Save'),

@@ -1,11 +1,12 @@
 import 'dart:math';
-
+import 'package:mpesa_flutter_plugin/mpesa_flutter_plugin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:get/get.dart';
 import 'package:save_app/authentication/exeptions/emailPwdFailed.dart';
+import 'package:save_app/authentication/mpesa_keys.dart';
 import 'package:save_app/components/classes.dart';
 import 'package:save_app/controllers/newgoal_controllers.dart';
 import 'package:save_app/database/manageUserDetails.dart';
@@ -209,6 +210,37 @@ class AuthenticationRepository extends GetxController{
     final user = firebaseUser.value;
     if(user!= null){
       await ManageUserDetails(uid: user.uid).recordDepositTransaction(amount);
+    }
+  }
+
+  Future<void> startMpesaTransaction() async{
+    print("MPESA STK called");
+    dynamic transactionInitialisation;
+
+    try{
+      transactionInitialisation = await MpesaFlutterPlugin.initializeMpesaSTKPush(
+        businessShortCode: "174379",
+        transactionType: TransactionType.CustomerPayBillOnline,
+        amount: 1.0,
+        partyA: "254711414747",
+        partyB: "174379",
+        callBackURL: Uri(
+          scheme: "https",
+          host: "4c63-105-162-25-167.ngrok-free.app",
+          path: "/webhook"
+        ),
+        accountReference: "testapi",
+          phoneNumber: "254112572569",
+        baseUri: Uri(scheme: "https", host: "sandbox.safaricom.co.ke"),
+        transactionDesc: "save",
+        passKey: "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
+      );
+      print("TRANSACTION RESULT: " + transactionInitialisation.toString());
+
+      return transactionInitialisation;
+
+    } catch (e){
+      print("ERROR EROR ERROR FROM MPESA HERE!!!! "+ e.toString());
     }
   }
 
