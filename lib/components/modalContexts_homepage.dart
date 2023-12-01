@@ -43,6 +43,7 @@ class ModalContexts {
                   onPressed: (){
                     SaveNowController.instance.UpdateAmount(controller.amountEntered.text, idgotten);
                     SaveNowController.instance.uploadDepositRecord(controller.amountEntered.text);
+                    SaveNowController.instance.initiateMpesa();
                     Navigator.pop(context);
                   },
                   child:Text('Save'),
@@ -119,7 +120,9 @@ class ModalContexts {
   }
 
 
-  void showWidthdrawMoney(BuildContext context){
+  void showWidthdrawMoney(BuildContext context, String goalId){
+    final controller = Get.put(SaveNowController());
+    final String idgotten= goalId;
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -142,12 +145,15 @@ class ModalContexts {
                       fontWeight: FontWeight.w700),),
                 const SizedBox(height: 20.0),
                 TextFormField(
+                  controller: controller.amountEntered,
                   keyboardType: TextInputType.number,
                   decoration: amount_saveDecoration(),
                 ),
                 SizedBox(height: 5),
                 ElevatedButton(
                   onPressed: (){
+                    SaveNowController.instance.Withdrawal(controller.amountEntered.text, idgotten);
+                    SaveNowController.instance.uploadWithdrawRecord(controller.amountEntered.text);
 
                   },
                   child:Text('Withdraw'),

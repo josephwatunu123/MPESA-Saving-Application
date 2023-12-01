@@ -44,6 +44,7 @@ dependencies:
   cloud_firestore: ^4.9.3
   fluttertoast: ^8.2.2
   http: ^1.1.2
+  mpesa_flutter_plugin: ^1.6.1
 
 dev_dependencies:
   flutter_test:

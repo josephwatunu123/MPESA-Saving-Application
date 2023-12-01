@@ -45,7 +45,7 @@ class viewGoal extends StatelessWidget{
               alignment: Alignment.topCenter,
               child: Container(
                 width: double.infinity,
-                height: 290.0,
+                height: 250.0,
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.0),
@@ -179,7 +179,7 @@ class viewGoal extends StatelessWidget{
                         child: Text('Withdraw',
                             style: buttondec),
                         onPressed: (){
-                          saveContext.showWidthdrawMoney(context);
+                          saveContext.showWidthdrawMoney(context, goalData['goalId']);
                         },)
                     ],
                   )
@@ -220,7 +220,7 @@ class viewGoal extends StatelessWidget{
                     children: [
                       Text('Delete goal',
                         style: descTextStyle,),
-                      Text('delete goal and move money to save now'),
+                      Text('delete goal'),
                     ],
                   ),
                   Column(

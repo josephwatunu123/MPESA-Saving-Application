@@ -13,7 +13,20 @@ class SaveNowController extends GetxController{
     await AuthenticationRepository.instance.updateGoalDeposit(amount: amount, gid: gid);
   }
 
+  void Withdrawal(String amount, String gid)async{
+    print("We reached the controlelrs and passed amoung ${amountEntered.text}");
+    await AuthenticationRepository.instance.withdrawamount(amount: amount, gid: gid);
+  }
+
   void uploadDepositRecord(String amount)async{
     await AuthenticationRepository.instance.depositRecord(amount: amount);
+  }
+  void uploadWithdrawRecord(String amount)async{
+    await AuthenticationRepository.instance.withdrawRecord(amount: amount);
+  }
+
+  void initiateMpesa()async{
+    print("Method to instantiate MPESA CALLED");
+    await AuthenticationRepository.instance.startMpesaTransaction();
   }
 }
