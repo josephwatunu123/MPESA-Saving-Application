@@ -41,24 +41,50 @@ class TransactionsPage extends StatelessWidget {
                     itemBuilder: (context, index) {
                       var transactionData =
                       docs[index].data() as Map<String, dynamic>;
-                      return Container(
-                        decoration: boxdecoration.buildBoxDecoration(),
-                        padding: EdgeInsets.all(15),
-                        child: ListTile(
-                          title: Text(
-                              transactionData['Deposited'] ?? "Error getting details"),
-                          subtitle: Text(
-                              '${transactionData['Time'] ?? "timestamp"}'),
-                          titleTextStyle: TextStyle(
-                            color: Colors.green,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20,
+                      return Column(
+                        children: [
+                          Container(
+                            decoration: boxdecoration.buildBoxDecoration(),
+                            padding: EdgeInsets.all(15),
+                            child: ListTile(
+                              title: Text(
+                                  transactionData['Deposited'] ?? "Error getting details"),
+                              subtitle: Text(
+                                  '${transactionData['Time'] ?? "timestamp"}'),
+                              titleTextStyle: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                              ),
+                              subtitleTextStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                            ),
+
                           ),
-                          subtitleTextStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                          ),
-                        ),
+                          Container(
+                            decoration: boxdecoration.buildBoxDecoration(),
+                            padding: EdgeInsets.all(15),
+                            child: ListTile(
+                              title: Text(
+                                  transactionData['Withdrawal'] ?? "Error getting details"),
+                              subtitle: Text(
+                                  '${transactionData['Time'] ?? "timestamp"}'),
+                              titleTextStyle: TextStyle(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                              ),
+                              subtitleTextStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                            ),
+
+                          )
+                        ],
+
                       );
                     },
                   );

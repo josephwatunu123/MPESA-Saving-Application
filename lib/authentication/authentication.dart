@@ -204,12 +204,28 @@ class AuthenticationRepository extends GetxController{
     }
   }
 
+  Future<void> withdrawamount({required String amount, required String gid}) async{
+    print("We reached auth doc amount is $amount");
+    final user = firebaseUser.value;
+    if(user!= null){
+      await ManageUserDetails(uid: user.uid).withdrawamt(amount, gid);
+    }
+  }
+
 
   Future<void> depositRecord({required String amount}) async{
     print("We reached auth doc amount is $amount");
     final user = firebaseUser.value;
     if(user!= null){
       await ManageUserDetails(uid: user.uid).recordDepositTransaction(amount);
+    }
+  }
+
+  Future<void> withdrawRecord({required String amount}) async{
+    print("We reached auth doc amount is $amount");
+    final user = firebaseUser.value;
+    if(user!= null){
+      await ManageUserDetails(uid: user.uid).recordwithdrawTransaction(amount);
     }
   }
 
@@ -226,7 +242,7 @@ class AuthenticationRepository extends GetxController{
         partyB: "174379",
         callBackURL: Uri(
           scheme: "https",
-          host: "4c63-105-162-25-167.ngrok-free.app",
+          host: "https://af3b-105-162-19-226.ngrok-free.app",
           path: "/webhook"
         ),
         accountReference: "testapi",

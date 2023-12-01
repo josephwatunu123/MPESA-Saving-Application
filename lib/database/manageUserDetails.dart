@@ -59,6 +59,43 @@ class ManageUserDetails{
       print('Document does not exist');
     }
   }
+  Future<void> withdrawamt(String amount, String gid) async {
+    const int toastLong = 5;
+    print("We reached the withdraw function $gid");
+
+    final CollectionReference<Map<String, dynamic>> testCollection =
+    FirebaseFirestore.instance.collection('test');
+
+    // Get the reference to the existing document or create it if it doesn't exist
+    final DocumentReference<Map<String, dynamic>> userGoalDocRef =
+    testCollection.doc(uid).collection('user_goals').doc(gid);
+
+    // Check if the document exists
+    final docSnapshot = await userGoalDocRef.get();
+    if (docSnapshot.exists) {
+      // Document exists, check if there's enough balance to withdraw
+      final double currentDeposit = docSnapshot.data()?['deposit'] ?? 0.0;
+      final double withdrawalAmount = double.parse(amount);
+
+      if (currentDeposit >= withdrawalAmount) {
+        // Enough balance to withdraw, update the 'deposit' field
+        userGoalDocRef.update({
+          'deposit': FieldValue.increment(-withdrawalAmount),
+        });
+
+        ShowToast toastPop = ShowToast();
+        toastPop.showToast("Withdrawal success. Refresh goal to update", toastLong);
+      } else {
+        // Not enough balance to withdraw, show an error message or handle accordingly
+        ShowToast toastPop = ShowToast();
+        toastPop.showToast("Insufficient balance for withdrawal", toastLong);
+      }
+    } else {
+      // Document doesn't exist, you may want to handle this case accordingly
+      print('Document does not exist');
+    }
+  }
+
 
 
 
@@ -87,13 +124,30 @@ class ManageUserDetails{
     print("Function to create tranasction called");
     print("We also got the amount for record $depoAmount");
     CollectionReference testCollection = FirebaseFirestore.instance.collection('test');
+    final now = DateTime.now();
+    print("The date and Time we are seeing here is $now");
+
     testCollection.doc(uid).collection('Transactions').add(
         {
           'Deposited':'Deposited $depoAmount',
-          'Time':FieldValue.serverTimestamp()
+          'Time':now
         }
     );
     print('Deposit Transaction Doc Creation worked');
+
+  }
+
+  Future<void> recordwithdrawTransaction(String withdrawAmount) async{
+    print("Function to create tranasction called");
+    print("We also got the amount for record $withdrawAmount");
+    CollectionReference testCollection = FirebaseFirestore.instance.collection('test');
+    testCollection.doc(uid).collection('Transactions').add(
+        {
+          'Withdrawal':'Withdrew $withdrawAmount',
+          'Time':FieldValue.serverTimestamp()
+        }
+    );
+    print('Withdraw Transaction Doc Creation worked');
 
   }
 
