@@ -15,10 +15,12 @@ Welcome to the Flutter Savings Application! This app simplifies saving using MPE
 - Real-time notifications and updates on savings.
 
 ## Screenshots
-![homepage](https://github.com/josephwatunu123/MPESA-Saving-Application/assets/81553233/91acd2d8-28be-4824-ada2-0ec1add9ea94)
+![homepage](https://github.com/josephwatunu123/MPESA-Saving-Application/assets/81553233/9206af96-e678-4c8d-9336-7aaf8980bafc)
+
 ![singlgoal](https://github.com/josephwatunu123/MPESA-Saving-Application/assets/81553233/d7df1d03-bc1e-42c2-8d3e-2ef0b5045711)
 ![creatgoal](https://github.com/josephwatunu123/MPESA-Saving-Application/assets/81553233/0b5dd023-e276-4756-ac10-19b413b2baf1)
-![savingscreen](https://github.com/josephwatunu123/MPESA-Saving-Application/assets/81553233/afd87dab-f893-4fc7-b864-8a823fe46387)
+![savingscreen](https://github.com/josephwatunu123/MPESA-Saving-Application/assets/81553233/3d2e1b9e-4dc8-47aa-8248-31b1e3b96142)
+
 ![api](https://github.com/josephwatunu123/MPESA-Saving-Application/assets/81553233/45566357-6d49-4d8e-9abf-0c23e6f6ae6a)
 
 ## Installation and Setup
